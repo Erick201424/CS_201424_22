@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { success } from "../../../network/response.js";
 import { getData } from "../../../model/db.js";
+import { getUser } from "../../../model/Users.js";
 
 import cors from "cors";
 
@@ -25,6 +26,15 @@ router.post('/login', function (req, res) {
     });
 });
 
+router.get('/all_users', async function (req, res) {
+    getUser.findAll({ attributes: ['username', 'email', 'password', 'phone_number'] })
+        .then(users => {
+            res.send(users)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
 
 router.get('/list', async function (req, res) {
     console.log('listar');
