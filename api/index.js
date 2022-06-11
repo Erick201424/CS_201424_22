@@ -1,20 +1,14 @@
-const express = require('express');
-const { status } = require('express/lib/response');
-const res = require('express/lib/response');
-const cors = require('cors');
+import express from 'express';
 
-// npm i cors --save
-const config = require('../config.js');
-const user = require('./components/user/network.js')
+import { api } from '../config.js';
+import user from './components/user/network.js ';
 
-const app = express();  
+const app = express();
 
 //ROUTERS
 app.use('/api/user', user);
-app.use(cors({origin: true, credential: true}));
 
-//Servidor activo
-app.listen(config.api.port, () => {
-    console.log('Servidor corriendo en el puerto en el puerto =>', config.api.port)
-}
-);
+//SERVIDOR ACTIVO
+app.listen(api.port, () => {
+    console.log('Servidor corriendo en el puerto: ', api.port)
+})

@@ -1,13 +1,15 @@
-const express = require('express');
-const response = require('../../../network/response');
-const { getConnection } = require('../../../model/db');
-const { text } = require('express');
-const { Query } = require('pg/lib');
+import { Router } from "express";
+import { success } from "../../../network/response.js";
+import { getData } from "../../../model/db.js";
 
-const router = express.Router();
+import cors from "cors";
+
+const router = Router();
+
+router.use(cors());
 
 router.get('/success', function (req, res) {
-    response.success(req, res, "", 200);
+    success(req, res, "", 200);
 
 });
 
@@ -24,72 +26,94 @@ router.post('/login', function (req, res) {
 });
 
 
+router.get('/list', async function (req, res) {
+    console.log('listar');
+    const client = await getData();
+
+    const query_request = {
+        text: 'SELECT * FROM tbl_usersdb'
+    }
+
+    client
+        .query(query_request)
+        .then((r) => {
+            success(req, res, r, 200);
+        })
+        .catch((e) => {
+            success(req, res, e.stack, 200);
+        });
+});
+
 router.post('/register', async function (req, res) {
     //Realizar conexion a DB
     console.log('register');
-    const client = await getConnection();
+    const client = await getData();
 
     let username = req.query.username;
     let email = req.query.email;
     let password = req.query.password;
     let phone_number = req.query.phone_number;
-
-    console.log(username, email, password, phone_number)
 
     const query_request = {
         text: 'INSERT INTO tbl_usersdb(username, email, password, phone_number) VALUES ($1, $2, $3, $4)',
         values: [username, email, password, phone_number]
     };
 
-    client.query(query_request)
-        .then(r => { console.log('1'); response.success(req, res, r, 200); })
-        .catch(e => { console.log('2'); response.success(req, res, e.stack, 200); })
+    client
+        .query(query_request)
+        .then((r) => {
+            success(req, res, r, 200);
+        })
+        .catch((e) => {
+            success(req, res, e.stack, 200);
+        });
 });
 
 router.delete('/delete', async function (req, res) {
-    //Realizar conexion a DB
-    const client = await getConnection();
+    //Realizar conexión a DB
+    console.log('delete');
+    const client = await getData();
 
-    let idUser = req.query.id;
+    let id = req.query.id;
 
     const query_request = {
-        text: `delete from tbl_usersdb where id = ${idUser}`
+        text: `DELETE FROM tbl_usersdb WHERE id = ${id}`
     };
 
-    client.query(query_request)
-        .then(r => { console.log('1'); response.success(req, res, r, 200); })
-        .catch(e => { console.log('2'); response.success(req, res, e.stack, 200); })
+    client
+        .query(query_request)
+        .then((r) => {
+            success(req, res, r, 200);
+        })
+        .catch((e) => {
+            success(req, res, e.stack, 200);
+        });
 });
 
 router.put('/update', async function (req, res) {
-    //Realizar conexion a DB
-    const client = await getConnection();
+    //Realizar conexión a DB
+    console.log('update');
+    const client = await getData();
 
-    let idUser = req.query.id;
+    let id = req.query.id;
     let username = req.query.username;
     let email = req.query.email;
     let password = req.query.password;
     let phone_number = req.query.phone_number;
 
     const query_request = {
-        text: `UPDATE  tbl_usersdb SET username= '${username}', email= '${email}', password= '${password}', phone_number= '${phone_number}' WHERE id= '${idUser}'`
+        text: 'UPDATE tbl_usersdb SET username = $1, email = $2, password = $3, phone_number = $4 WHERE id = $5',
+        values: [username, email, password, phone_number, id]
     };
 
-    client.query(query_request)
-        .then(r => { console.log('1'); response.success(req, res, r, 200); })
-        .catch(e => { console.log('2'); response.success(req, res, e.stack, 200); })
+    client
+        .query(query_request)
+        .then((r) => {
+            success(req, res, r, 200);
+        })
+        .catch((e) => {
+            success(req, res, e.stack, 200);
+        });
 });
 
-router.get('/list', async function (req, res) {
-    //Realizar conexion a DB
-    const client = await getConnection();
-
-    const query_request = {
-        text: 'select * from tbl_usersdb'
-    };
-    client.query(query_request, (err,result) => {
-        res.send(result.rows)
-    })
-});
-
-module.exports = router;
+export default router;
