@@ -1,0 +1,25 @@
+{
+  "name": "cs_201424_22",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Erick201424/CS_201424_22.git"
+  },
+  "author": "Erick Diaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Erick201424/CS_201424_22/issues"
+  },
+  "homepage": "https://github.com/Erick201424/CS_201424_22#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16",
+    "pg": "^8.7.3",
+    "socket.io": "^4.5.1"
+  }
+}
