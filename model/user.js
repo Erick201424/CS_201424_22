@@ -4,11 +4,13 @@ import Sequelize from "sequelize";
 const User = getData.sequelizeClient.define(
   "tbl_usersdb",
   {
-    id: { type: Sequelize.SMALLINT, primaryKey: true },
+    id:{type: Sequelize.SMALLINT, primaryKey: true, autoIncrement: true },
     username: Sequelize.STRING,
     email: Sequelize.STRING,
     password: Sequelize.STRING,
     phone_number: Sequelize.STRING,
+    createdAt: false,
+    updateAt: false,
   },
   {
     tableName: "tbl_usersdb",
