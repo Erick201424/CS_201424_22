@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { success } from "../../../network/response.js";
 import { getData } from "../../../model/db.js";
-import { getUser } from "../../../model/Users.js";
+import { getUser } from "../../../model/user.js";
 
 import cors from "cors";
 
