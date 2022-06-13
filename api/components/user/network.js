@@ -1,7 +1,9 @@
-import { Router } from 'express';
-import { success } from '../../../network/response.js';
-import { getData } from '../../../model/db.js'
+import { Router } from "express";
+import { success } from "../../../network/response.js";
+import { getData } from "../../../model/db.js";
 import { getUser } from "../../../model/user.js";
+
+import cors from "cors";
 
 const router = Router();
 
