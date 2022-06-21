@@ -10,7 +10,7 @@ const data = dotenv.config({
 });
 
 export const db = {
-    user: data.parsed.USER,
+    user: data.parsed.USERDB,
     host: data.parsed.HOST,
     database: data.parsed.DATABASE,
     password: data.parsed.PASSWORD,
