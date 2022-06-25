@@ -44,7 +44,7 @@ const sequelizeClient = (() => {
     }
 })();
 
-sequelizeClient.sync({ force: true })
+sequelizeClient.sync({ alter: true })
     .then(() => {
         console.log('Conectado')
     })
